@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>Vue demo</title>
+</head>
+<body>
+	
+	<div id="app" class="app">
+		{{ message }}
+	</div>
+
+	<div id="app2" v-bind:title="message">
+		鼠标悬停我这里，看一看时间
+	</div>
+
+	<div id="app3" v-if="janson">
+		Now you see me
+	</div>
+
+	<div id="app4">
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+	</div>
+	
+	<div id="app5">
+		<p>{{ message }}</p>
+		<button v-on:click="reverseMessage">Reverse Message</button>
+	</div>
+
+	<div id="app6">
+		<p>{{ message }}</p>
+		<input v-model="message">
+	</div>
+
+	<div id="app7">
+		<p>{{ foo }}</p>
+		<button v-on:click="foo = 'jonson'">change it</button>
+	</div>
+	
+	<div id="app8">
+		{{message}}
+	</div>
+
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="/main.1f19ae8e.js"></script>
+</body>
+</html>
