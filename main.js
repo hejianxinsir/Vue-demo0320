@@ -78,12 +78,12 @@ var vm1 = new Vue({
 	data: data1
 })
 
-vm1.$data === data	// true
-vm1.$el === document.getElementById('app8')	// true
+// vm1.$data === data	// true
+// vm1.$el === document.getElementById('app8')	// true
 
-vm.$watch('a', function(newValue, oldValue){
+// vm.$watch('a', function(newValue, oldValue){
 	// a 变化的时候这里就会调用
-})
+// })
 
 // Life Circle hooks
 
@@ -98,3 +98,42 @@ vm.$watch('a', function(newValue, oldValue){
 //		console.log('a is : ' + this.a)
 //	}
 //})
+
+// v=once
+var app9 = new Vue({
+	el: '#app9',
+	data: {
+		msg: 'hehe'
+	}
+})
+
+// v-html
+var app10 = new Vue({
+	el: '#app10',
+	data: {
+		rawHtml: '<span style="color: red;">this should be red</span>'
+	}
+})
+
+
+// v-bind:属性="xxx" 动态绑定 class
+var app11 = new Vue({
+	el: '#app11',
+	data: {
+		isActive: true,
+		isGreen: true,
+		test1: false,
+		test2: true,
+		color: '#d13511',
+		size: '50px'
+	}
+})
+
+// v-if  v-else-if v-else
+var app12 = new Vue({
+	el: '#app12',
+	data: {
+		type: 'C'	
+	}
+})
+

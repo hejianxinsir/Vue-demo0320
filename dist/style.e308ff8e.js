@@ -117,131 +117,79 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"main.js":[function(require,module,exports) {
-console.log('main.js'); // demo1
+})({"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
   }
-}); // v-bind:title
 
-var app2 = new Vue({
-  el: '#app2',
-  data: {
-    message: 'You loaded this page on' + new Date().toLocaleString()
-  }
-}); // v-if:seen
+  return bundleURL;
+}
 
-var app3 = new Vue({
-  el: '#app3',
-  data: {
-    janson: true
-  }
-}); // v-for="todo in todos"
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
-var app4 = new Vue({
-  el: '#app4',
-  data: {
-    todos: [{
-      text: 'javascript'
-    }, {
-      text: 'Vue'
-    }, {
-      text: 'Here'
-    }]
-  }
-});
-app4.todos.push({
-  text: 'janson'
-}); // v-on:click="reverseMessage"
-
-var app5 = new Vue({
-  el: '#app5',
-  data: {
-    message: 'Hello, jonson'
-  },
-  methods: {
-    reverseMessage: function reverseMessage() {
-      this.message = this.message.split('').reverse().join('');
+    if (matches) {
+      return getBaseURL(matches[0]);
     }
   }
-}); // v-model="message"
 
-var app6 = new Vue({
-  el: '#app6',
-  data: {
-    message: 'janson'
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
   }
-}); // 另
 
-var obj = {
-  foo: 'bar'
-};
-var app7 = new Vue({
-  el: '#app7',
-  data: obj
-}); // 另 $ 作为前缀的方法，是为了区别与开发者自定义的方法
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
 
-var data1 = {
-  a: 1
-};
-var vm1 = new Vue({
-  el: '#app8',
-  data: data1
-}); // vm1.$data === data	// true
-// vm1.$el === document.getElementById('app8')	// true
-// vm.$watch('a', function(newValue, oldValue){
-// a 变化的时候这里就会调用
-// })
-// Life Circle hooks
-// created 
-//new Vue({
-//	data: {
-//		a: 1
-//	},
-//
-//	created: function(){
-//		// `this` pointes to the vm instance
-//		console.log('a is : ' + this.a)
-//	}
-//})
-// v=once
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
 
-var app9 = new Vue({
-  el: '#app9',
-  data: {
-    msg: 'hehe'
-  }
-}); // v-html
+    cssTimeout = null;
+  }, 50);
+}
 
-var app10 = new Vue({
-  el: '#app10',
-  data: {
-    rawHtml: '<span style="color: red;">this should be red</span>'
-  }
-}); // v-bind:属性="xxx" 动态绑定 class
+module.exports = reloadCSS;
+},{"./bundle-url":"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
 
-var app11 = new Vue({
-  el: '#app11',
-  data: {
-    isActive: true,
-    isGreen: true,
-    test1: false,
-    test2: true,
-    color: '#d13511',
-    size: '50px'
-  }
-}); // v-if  v-else-if v-else
-
-var app12 = new Vue({
-  el: '#app12',
-  data: {
-    type: 'C'
-  }
-});
-},{}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"_css_loader":"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -445,5 +393,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","main.js"], null)
-//# sourceMappingURL=/main.1f19ae8e.js.map
+},{}]},{},["../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/style.e308ff8e.js.map
